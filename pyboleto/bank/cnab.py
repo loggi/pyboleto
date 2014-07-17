@@ -29,14 +29,14 @@ def _parse_currency(s):
     return Decimal(CURRENCY_PARSE_FORMAT % (int(s[:-2]), int(s[-2:])))
 
 
-class CnabParsingError(Exception):
+class CNABParsingError(Exception):
     """
     Default exception for any error while parsing CNAB file
     """
     pass
 
 
-class CnabParser(object):
+class CNABParser(object):
     """
     Parser for CNAB file
     """
@@ -57,7 +57,7 @@ class CnabParser(object):
             self.transactions = self._parse_transactions(data[1:-1])
             self.trailer = self._parse_trailer(data[-1])
         except Exception, e:
-            raise CnabParsingError(unicode(e)), None, sys.exc_info()[2]
+            raise CNABParsingError(unicode(e)), None, sys.exc_info()[2]
 
     @staticmethod
     def _parse_header(h):
