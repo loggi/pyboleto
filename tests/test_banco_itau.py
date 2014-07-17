@@ -12,7 +12,7 @@ class TestBancoItau(BoletoTestCase):
         self.dados = []
         for i in range(3):
             d = BoletoItau()
-            d.carteira = '109'
+            d.carteira = '157'
             d.agencia_cedente = '0293'
             d.conta_cedente = '01328'
             d.data_vencimento = datetime.date(2009, 10, 19)
