@@ -44,9 +44,9 @@ else:
 setup(
     name='pyboleto',
     version=get_version('pyboleto'),
-    author='Eduardo Cereto Carvalho',
-    author_email='eduardocereto@gmail.com',
-    url='https://github.com/eduardocereto/pyboleto',
+    author='Loggi Tecnologia LTDA',
+    author_email='dev@loggi.com',
+    url='https://github.com/loggi/pyboleto',
     packages=find_packages(),
     package_data={
         '': ['LICENSE'],
