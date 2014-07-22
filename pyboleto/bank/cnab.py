@@ -98,10 +98,60 @@ class CNABParser(object):
 
     @staticmethod
     def _parse_trailer(t):
-        """
-        Get trailer info
-        """
+        """ Get trailer info. """
         return {
             'registros_total': int(t[212:220]),
             'valor_total_documento': _parse_currency(t[220:234]),
         }
+
+
+class CNABWriter(object):
+
+    """ Write CNAB 240 files.
+
+    This writer is designed to work with CNAB 400 standard files
+    """
+
+    def __init__(self, banco):  # noqa
+        self.id_banco = banco.id
+        self.nome_banco = banco.nome
+        self.versao_header = banco.versao_cnab_header
+        self.versao_lote = banco.versao_cnab_lote
+
+    def write_header_file(self, info):
+        """ Write header line for the file.
+
+        This writes the header line
+        """
+        header = '{0:03d}{0:04d}0{}{}{0:14d}{}0{0:04d} {0:07d}{0:05d} {}'
+        header += '{}{}{}1{}{}{0:06}{0:03}{0:05d}{}{0:03d}{}'
+
+        header = header.format(
+            self.id_banco, info.cod_lote, ''.rjust(9), info.doc_tp, info.doc,
+            ''.rjust(9), info.agencia, 0, info.conta, info.dac,
+            info.nome_empr.rjust(30), self.nome_banco.rjust(30),
+            ''.rjust(10), info.tt.strftime('%d%m%Y'),
+            info.tt.strftime('%h%M%S'), info.seq, self.versao_header, 0,
+            ''.rjust(54), 0, ''.rjust(12))
+
+        assert len(header) == 240
+        return header
+
+    def write_header_batch(self, info):
+        """ Write the header line for the batch.
+
+        For each batch of data, there must be  a header
+        """
+        batch = '{0:03d}{0:04d}1R0100{0:03d} {}{0:15d}{}0{0:04d} {0:07d}{0:05d}'
+        batch += ' {}{}{}{0:08d}{}{}{}'
+
+        batch = batch.format(
+            self.id_banco, info.cod_lote, self.versao_lote, info.doc_tp,
+            info.doc, ''.rjust(20), info.agencia, 0, info.conta, info.dac,
+            info.nome_empr.rjust(30), ''.rjust(80), info.arq_ret,
+            info.tt.strftime('%d%m%Y'), info.cred_data.strftime('%d%m%Y'),
+            ''.rjust(33))
+
+        assert len(batch) == 240
+
+
