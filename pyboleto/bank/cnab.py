@@ -1,7 +1,5 @@
 # encoding: utf-8
-"""
-Backport `cnab` module from python-boleto to our fork of pyboleto.
-"""
+"""Backport `cnab` module from python-boleto to our fork of pyboleto."""
 import sys
 from decimal import Decimal
 
@@ -13,9 +11,7 @@ CURRENCY_PARSE_FORMAT = '%d.%.2d'
 
 
 def _parse_date(s):
-    """
-    Parse CNAB400 date
-    """
+    """ Parse CNAB400 date. """
     try:
         return datetime.strptime(s, DATE_PARSE_FORMAT).date()
     except ValueError:
@@ -23,25 +19,23 @@ def _parse_date(s):
 
 
 def _parse_currency(s):
-    """
-    Parse CNAB400 currency
-    """
+    """ Parse CNAB400 currency. """
     return Decimal(CURRENCY_PARSE_FORMAT % (int(s[:-2]), int(s[-2:])))
 
 
 class CNABParsingError(Exception):
-    """
-    Default exception for any error while parsing CNAB file
-    """
+
+    """ Default exception for any error while parsing CNAB file. """
+
     pass
 
 
 class CNABParser(object):
-    """
-    Parser for CNAB file
-    """
+
+    """ Parser for CNAB file. """
 
     def __init__(self, filename):
+        """ CNAB file structure and loading. """
         self.header = None
         self.transactions = None
         self.trailer = None
@@ -49,9 +43,7 @@ class CNABParser(object):
             self._parse(fd.readlines())
 
     def _parse(self, data):
-        """
-        Automatically parses
-        """
+        """ Automatically parses.  """
         try:
             self.header = self._parse_header(data[0])
             self.transactions = self._parse_transactions(data[1:-1])
@@ -61,9 +53,7 @@ class CNABParser(object):
 
     @staticmethod
     def _parse_header(h):
-        """
-        Get header info
-        """
+        """ Get header info. """
         return {
             'agencia': int(h[26:30]),
             'conta': int(h[33:38]),
@@ -73,16 +63,12 @@ class CNABParser(object):
         }
 
     def _parse_transactions(self, transactions):
-        """
-        Get transactions for each transaction line
-        """
+        """ Get transactions for each transaction line. """
         return [self._parse_transaction(t) for t in transactions]
 
     @staticmethod
     def _parse_transaction(t):
-        """
-        Get transaction info
-        """
+        """ Get transaction info. """
         return {
             'nosso_numero': int(t[62:70]),
             'carteira': int(t[82:85]),
