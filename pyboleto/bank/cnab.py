@@ -9,6 +9,9 @@ from datetime import datetime
 DATE_PARSE_FORMAT = '%d%m%y'
 CURRENCY_PARSE_FORMAT = '%d.%.2d'
 
+def _currency(decimal):
+    """ Return xxx.yy as xxxyy. """
+    return int(decimal * 100)
 
 def _parse_date(s):
     """ Parse CNAB400 date. """
@@ -104,40 +107,33 @@ class CNABWriter(object):
         self.versao_header = banco.versao_cnab_header
         self.versao_lote = banco.versao_cnab_lote
 
-    def write_header_file(self, info):
-        """ Write header line for the file.
+    def write_header(self, info):
+        """ Write header record.
 
-        This writes the header line
+        This writes the 400 bytes record for the header.
         """
-        header = '{0:03d}{0:04d}0{}{}{0:14d}{}0{0:04d} {0:07d}{0:05d} {}'
-        header += '{}{}{}1{}{}{0:06}{0:03}{0:05d}{}{0:03d}{}'
-
+        header = "01{}01{}{0:04d}00{0:05d}{0:01d}{}{}{0:03d}{}{}{}{0:06}"
         header = header.format(
-            self.id_banco, info.cod_lote, ''.rjust(9), info.doc_tp, info.doc,
-            ''.rjust(9), info.agencia, 0, info.conta, info.dac,
-            info.nome_empr.rjust(30), self.nome_banco.rjust(30),
-            ''.rjust(10), info.tt.strftime('%d%m%Y'),
-            info.tt.strftime('%h%M%S'), info.seq, self.versao_header, 0,
-            ''.rjust(54), 0, ''.rjust(12))
+            info.remessa.rjust(7), info.cobranca.rjust(15),
+            info.agencia, info.conta, info.dac, ''.rjust(8),
+            info.nome_empr.rjust(30), self.id_banco, self.nome_banco.rjust(30),
+            info.tt.strftime("%d%m%y"), ''.rjust(294), info.seq
+        )
 
         assert len(header) == 240
         return header
 
-    def write_header_batch(self, info):
-        """ Write the header line for the batch.
+    def write_record(self, boleto, info):
+        """ Based on a boleto, write a record.
 
-        For each batch of data, there must be  a header
+        Give me an already built boleto to write the record.
         """
-        batch = '{0:03d}{0:04d}1R0100{0:03d} {}{0:15d}{}0{0:04d} {0:07d}{0:05d}'
-        batch += ' {}{}{}{0:08d}{}{}{}'
+        header = '1{0:02d}{0:14d}{0:04d}00{0:05d}{0:01d}{}{}{0:08d}{}{0:03d}'
+        header += '{0:08d}{0:01d}{}{}{0:02d}{0:06d}{}{0:08d}{0:01d}{}{}{0:02d}'
+        header += '{0:06d}{}{0:08d}{}{0:06d}{0:13d}{0:03d}{0:04d}{0:01d}{0:02d}'
+        header += '{0:13d}{}{0:13d}{0:13d}{0:13d}{0:13d}{0:13d}{0:13d}{}{}{}'
+        header += '{0:04d}{}{0:13d}{}{}{}{}{}{0:06d}'
 
-        batch = batch.format(
-            self.id_banco, info.cod_lote, self.versao_lote, info.doc_tp,
-            info.doc, ''.rjust(20), info.agencia, 0, info.conta, info.dac,
-            info.nome_empr.rjust(30), ''.rjust(80), info.arq_ret,
-            info.tt.strftime('%d%m%Y'), info.cred_data.strftime('%d%m%Y'),
-            ''.rjust(33))
-
-        assert len(batch) == 240
-
+        header = header.format(
+            info.tipo_documento, boleto.cedente_documento,
 
