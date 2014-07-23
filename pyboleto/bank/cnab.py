@@ -35,7 +35,7 @@ class CNABParsingError(Exception):
 
 class CNABParser(object):
 
-    """ Parser for CNAB file. """
+    """ Parser for CNAB 400 file. """
 
     def __init__(self, filename):
         """ CNAB file structure and loading. """
@@ -96,7 +96,7 @@ class CNABParser(object):
 
 class CNABWriter(object):
 
-    """ Write CNAB 240 files.
+    """ Writer for CNAB 400 files.
 
     This writer is designed to work with CNAB 400 standard files
     """
