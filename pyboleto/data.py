@@ -66,7 +66,7 @@ class custom_property(object):
 
 
 class BoletoData(object):
-    """Interface para implementações específicas de bancos
+    """Interface para implementações específicas de bancos.
 
     Esta classe geralmente nunca será usada diretamente. Geralmente o usuário
     irá usar uma das subclasses com a implementação específica de cada banco.
@@ -129,40 +129,44 @@ class BoletoData(object):
     """
 
     def __init__(self, **kwargs):
+        """ Init Boleto. """
+        def mask(value, default=""):
+            """ Get value. """
+            return kwargs.pop(value, default)
         # FIXME: valor_documento should be a Decimal and only allow 2 decimals,
         #        otherwise the printed value might diffent from the value in
         #        the barcode.
-        self.aceite = kwargs.pop('aceite', "N")
-        self.agencia_cedente = kwargs.pop('agencia_cedente', "")
-        self.carteira = kwargs.pop('carteira', "")
-        self.cedente = kwargs.pop('cedente', "")
-        self.cedente_cidade = kwargs.pop('cedente_cidade', "")
-        self.cedente_uf = kwargs.pop('cedente_uf', "")
-        self.cedente_logradouro = kwargs.pop('cedente_logradouro', "")
-        self.cedente_bairro = kwargs.pop('cedente_bairro', "")
-        self.cedente_cep = kwargs.pop('cedente_cep', "")
-        self.cedente_documento = kwargs.pop('cedente_documento', "")
-        self.codigo_banco = kwargs.pop('codigo_banco', "")
-        self.conta_cedente = kwargs.pop('conta_cedente', "")
-        self.data_documento = kwargs.pop('data_documento', "")
-        self.data_processamento = kwargs.pop('data_processamento',
-                                             datetime.date.today())
-        self.data_vencimento = kwargs.pop('data_vencimento', "")
-        self.especie = kwargs.pop('especie', "R$")
-        self.especie_documento = kwargs.pop('especie_documento', "")
-        self.local_pagamento = kwargs.pop(
+        self.aceite = mask('aceite', "N")
+        self.agencia_cedente = mask('agencia_cedente')
+        self.carteira = mask('carteira')
+        self.cedente = mask('cedente')
+        self.cedente_cidade = mask('cedente_cidade')
+        self.cedente_uf = mask('cedente_uf')
+        self.cedente_logradouro = mask('cedente_logradouro')
+        self.cedente_bairro = mask('cedente_bairro')
+        self.cedente_cep = mask('cedente_cep')
+        self.cedente_documento = mask('cedente_documento')
+        self.codigo_banco = mask('codigo_banco')
+        self.conta_cedente = mask('conta_cedente')
+        self.data_documento = mask('data_documento')
+        self.data_processamento = mask('data_processamento',
+                                       datetime.date.today())
+        self.data_vencimento = mask('data_vencimento')
+        self.especie = mask('especie', "R$")
+        self.especie_documento = mask('especie_documento')
+        self.local_pagamento = mask(
             'local_pagamento', u"Pagável em qualquer banco até o vencimento")
-        self.logo_image = kwargs.pop('logo_image', "")
-        self.moeda = kwargs.pop('moeda', "9")
-        self.numero_documento = kwargs.pop('numero_do_documento', "")
-        self.quantidade = kwargs.pop('quantidade', "")
-        self.sacado_nome = kwargs.pop('sacado_nome', "")
-        self.sacado_documento = kwargs.pop('sacado_documento', "")
-        self.sacado_cidade = kwargs.pop('sacado_cidade', "")
-        self.sacado_uf = kwargs.pop('sacado_uf', "")
-        self.sacado_endereco = kwargs.pop('sacado_endereco', "")
-        self.sacado_bairro = kwargs.pop('sacado_bairro', "")
-        self.sacado_cep = kwargs.pop('sacado_cep', "")
+        self.logo_image = mask('logo_image')
+        self.moeda = mask('moeda', "9")
+        self.numero_documento = mask('numero_do_documento')
+        self.quantidade = mask('quantidade')
+        self.sacado_nome = mask('sacado_nome')
+        self.sacado_documento = mask('sacado_documento')
+        self.sacado_cidade = mask('sacado_cidade')
+        self.sacado_uf = mask('sacado_uf')
+        self.sacado_endereco = mask('sacado_endereco')
+        self.sacado_bairro = mask('sacado_bairro')
+        self.sacado_cep = mask('sacado_cep')
         if kwargs:
             raise TypeError("Paramêtro(s) desconhecido: %r" % (kwargs, ))
         self._cedente_endereco = None
