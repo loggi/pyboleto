@@ -107,33 +107,4 @@ class CNABWriter(object):
         self.versao_header = banco.versao_cnab_header
         self.versao_lote = banco.versao_cnab_lote
 
-    def write_header(self, info):
-        """ Write header record.
-
-        This writes the 400 bytes record for the header.
-        """
-        header = "01{}01{}{0:04d}00{0:05d}{0:01d}{}{}{0:03d}{}{}{}{0:06}"
-        header = header.format(
-            info.remessa.rjust(7), info.cobranca.rjust(15),
-            info.agencia, info.conta, info.dac, ''.rjust(8),
-            info.nome_empr.rjust(30), self.id_banco, self.nome_banco.rjust(30),
-            info.tt.strftime("%d%m%y"), ''.rjust(294), info.seq
-        )
-
-        assert len(header) == 240
-        return header
-
-    def write_record(self, boleto, info):
-        """ Based on a boleto, write a record.
-
-        Give me an already built boleto to write the record.
-        """
-        header = '1{0:02d}{0:14d}{0:04d}00{0:05d}{0:01d}{}{}{0:08d}{}{0:03d}'
-        header += '{0:08d}{0:01d}{}{}{0:02d}{0:06d}{}{0:08d}{0:01d}{}{}{0:02d}'
-        header += '{0:06d}{}{0:08d}{}{0:06d}{0:13d}{0:03d}{0:04d}{0:01d}{0:02d}'
-        header += '{0:13d}{}{0:13d}{0:13d}{0:13d}{0:13d}{0:13d}{0:13d}{}{}{}'
-        header += '{0:04d}{}{0:13d}{}{}{}{}{}{0:06d}'
-
-        header = header.format(
-            info.tipo_documento, boleto.cedente_documento,
 
