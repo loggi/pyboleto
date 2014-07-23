@@ -96,9 +96,9 @@ class CNABParser(object):
 
 class CNABWriter(object):
 
-    """ Writer for CNAB 400 files.
+    """ Writer for CNAB 240 files.
 
-    This writer is designed to work with CNAB 400 standard files
+    This writer is designed to work with CNAB 240 standard files
     """
 
     def __init__(self, banco):  # noqa
