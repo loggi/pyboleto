@@ -193,12 +193,11 @@ class BoletoData(object):
         """
 
         for attr, length, data_type in [
-            ('codigo_banco', 3, str),
-            ('moeda', 1, str),
-            ('data_vencimento', None, datetime.date),
-            ('valor_documento', -1, str),
-            ('campo_livre', 25, str),
-            ]:
+                ('codigo_banco', 3, str),
+                ('moeda', 1, str),
+                ('data_vencimento', None, datetime.date),
+                ('valor_documento', -1, str),
+                ('campo_livre', 25, str), ]:
             value = getattr(self, attr)
             if not isinstance(value, data_type):
                 raise TypeError("%s.%s must be a %s, got %r (type %s)" % (
@@ -210,7 +209,7 @@ class BoletoData(object):
                     self.__class__.__name__, attr, length, value, len(value)))
 
         due_date_days = (self.data_vencimento - _EPOCH).days
-        if not (9999 >= due_date_days >= 0):
+        if not 9999 >= due_date_days >= 0:
             raise TypeError(
                 "Invalid date, must be between 1997/07/01 and "
                 "2024/11/15")
