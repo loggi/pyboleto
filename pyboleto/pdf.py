@@ -53,6 +53,15 @@ class BoletoPDF(object):
         self.pdfCanvas = canvas.Canvas(file_descr, pagesize=pagesize)
         self.pdfCanvas.setStrokeColor(black)
 
+    def __enter__(self):
+        """ Should work with context since it is a file after all. """
+        return self
+
+    def __exit__(self, type, value, traceback):  # noqa
+        """ Easing working with files now. """
+        self.save()
+        return self
+
     def _load_image(self, logo_image):
         pyboleto_dir = os.path.dirname(os.path.abspath(__file__))
         image_path = os.path.join(pyboleto_dir, 'media', logo_image)
