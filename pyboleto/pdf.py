@@ -20,7 +20,7 @@ from reportlab.pdfgen import canvas
 
 
 class BoletoPDF(object):
-    """Geração do Boleto em PDF
+    """Geração do Boleto em PDF.
 
     Esta classe é responsável por imprimir o boleto em PDF.
     Outras classes podem ser implementadas no futuro com a mesma interface,
