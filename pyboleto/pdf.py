@@ -60,7 +60,6 @@ class BoletoPDF(object):
     def __exit__(self, type, value, traceback):  # noqa
         """ Easing working with files now. """
         self.save()
-        return self
 
     def _load_image(self, logo_image):
         pyboleto_dir = os.path.dirname(os.path.abspath(__file__))
