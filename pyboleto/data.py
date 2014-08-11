@@ -167,6 +167,7 @@ class BoletoData(object):
         self.sacado_endereco = mask('sacado_endereco')
         self.sacado_bairro = mask('sacado_bairro')
         self.sacado_cep = mask('sacado_cep')
+        self._valor_documento = Decimal(mask('valor_documento', '0.00'))
         if kwargs:
             raise TypeError("Paramêtro(s) desconhecido: %r" % (kwargs, ))
         self._cedente_endereco = None
@@ -174,7 +175,6 @@ class BoletoData(object):
         self._instrucoes = []
         self._sacado = None
         self._valor = None
-        self._valor_documento = None
 
     @property
     def barcode(self):
