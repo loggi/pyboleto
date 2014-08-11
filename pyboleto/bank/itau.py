@@ -20,8 +20,8 @@ class BoletoItau(BoletoData):
     agencia_cedente = custom_property('agencia_cedente', 4)
     carteira = custom_property('carteira', 3)
 
-    def __init__(self):
-        super(BoletoItau, self).__init__()
+    def __init__(self, **kwargs):
+        super(BoletoItau, self).__init__(**kwargs)
 
         self.codigo_banco = "341"
         self.logo_image = "logo_itau.jpg"
