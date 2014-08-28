@@ -1,22 +1,12 @@
 # -*- coding: utf-8 -*-
+from pyboleto import __version__
 from setuptools import setup, find_packages
 import sys
 import os
-import re
 
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
-
-def get_version(package):
-    """Return package version as listed in `__version__` in `__init__.py`."""
-    init_py = open(os.path.join(os.path.dirname(__file__),
-                                package, '__init__.py'),
-                   'r').read()
-    return re.search("^__version__ = ['\"]([^'\"]+)['\"]",
-                     init_py, re.MULTILINE
-    ).group(1)
 
 
 extra = {}
@@ -43,7 +33,7 @@ else:
 
 setup(
     name='pyboleto',
-    version=get_version('pyboleto'),
+    version=__version__,
     author='Loggi Tecnologia LTDA',
     author_email='dev@loggi.com',
     url='https://github.com/loggi/pyboleto',
