@@ -164,7 +164,7 @@ class BoletoData(object):
         self.sacado_documento = mask('sacado_documento')
         self.sacado_cidade = mask('sacado_cidade')
         self.sacado_uf = mask('sacado_uf')
-        self.sacado_endereco = mask('sacado_endereco')
+        self.sacado_endereco = mask('sacado_logradouro')
         self.sacado_bairro = mask('sacado_bairro')
         self.sacado_cep = mask('sacado_cep')
         self._valor_documento = Decimal(mask('valor_documento', '0.00'))
