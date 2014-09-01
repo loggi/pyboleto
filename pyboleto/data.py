@@ -137,8 +137,8 @@ class BoletoData(object):
         #        otherwise the printed value might diffent from the value in
         #        the barcode.
         self.aceite = mask('aceite', "N")
-        self.agencia_cedente = mask('agencia_cedente')
-        self.carteira = mask('carteira')
+        self.agencia_cedente = mask('cedente_agencia')
+        self.carteira = mask('cedente_carteira')
         self.cedente = mask('cedente')
         self.cedente_cidade = mask('cedente_cidade')
         self.cedente_uf = mask('cedente_uf')
@@ -146,8 +146,8 @@ class BoletoData(object):
         self.cedente_bairro = mask('cedente_bairro')
         self.cedente_cep = mask('cedente_cep')
         self.cedente_documento = mask('cedente_documento')
-        self.codigo_banco = mask('codigo_banco')
-        self.conta_cedente = mask('conta_cedente')
+        self.codigo_banco = mask('cedente_banco')
+        self.conta_cedente = mask('cedente_conta')
         self.data_documento = mask('data_documento')
         self.data_processamento = mask('data_processamento',
                                        datetime.date.today())
@@ -168,11 +168,11 @@ class BoletoData(object):
         self.sacado_bairro = mask('sacado_bairro')
         self.sacado_cep = mask('sacado_cep')
         self._valor_documento = Decimal(mask('valor_documento', '0.00'))
+        self._instrucoes = mask('instrucoes', [])
         if kwargs:
             raise TypeError("Paramêtro(s) desconhecido: %r" % (kwargs, ))
         self._cedente_endereco = None
         self._demonstrativo = []
-        self._instrucoes = []
         self._sacado = None
         self._valor = None
 
