@@ -152,7 +152,7 @@ class BoletoData(object):
         self.cedente_documento = mask('cedente_documento', _type=str)
         self.codigo_banco = mask('cedente_banco', _type=str)
         self.conta_cedente = mask('cedente_conta', _type=str)
-        self.data_documento = mask('data_documento', _type=str)
+        self.data_documento = mask('data_documento')
         self.data_processamento = mask('data_processamento',
                                        datetime.date.today())
         self.data_vencimento = mask('data_vencimento')
