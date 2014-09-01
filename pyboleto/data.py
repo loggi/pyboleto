@@ -130,25 +130,29 @@ class BoletoData(object):
 
     def __init__(self, **kwargs):
         """ Init Boleto. """
-        def mask(value, default=""):
+        def mask(value, default="", _type=None):
             """ Get value. """
-            return kwargs.pop(value, default)
+            ret = kwargs.pop(value, default)
+            if _type:
+                return _type(ret)
+            return ret
+
         # FIXME: valor_documento should be a Decimal and only allow 2 decimals,
         #        otherwise the printed value might diffent from the value in
         #        the barcode.
         self.aceite = mask('aceite', "N")
-        self.agencia_cedente = mask('cedente_agencia')
-        self.carteira = mask('cedente_carteira')
-        self.cedente = mask('cedente_nome')
-        self.cedente_cidade = mask('cedente_cidade')
-        self.cedente_uf = mask('cedente_uf')
-        self.cedente_logradouro = mask('cedente_logradouro')
-        self.cedente_bairro = mask('cedente_bairro')
-        self.cedente_cep = mask('cedente_cep')
-        self.cedente_documento = mask('cedente_documento')
-        self.codigo_banco = mask('cedente_banco')
-        self.conta_cedente = mask('cedente_conta')
-        self.data_documento = mask('data_documento')
+        self.agencia_cedente = mask('cedente_agencia', _type=str)
+        self.carteira = mask('cedente_carteira', _type=str)
+        self.cedente = mask('cedente_nome', _type=unicode)
+        self.cedente_cidade = mask('cedente_cidade', _type=unicode)
+        self.cedente_uf = mask('cedente_uf', _type=unicode)
+        self.cedente_logradouro = mask('cedente_logradouro', _type=unicode)
+        self.cedente_bairro = mask('cedente_bairro', _type=unicode)
+        self.cedente_cep = mask('cedente_cep', _type=str)
+        self.cedente_documento = mask('cedente_documento', _type=str)
+        self.codigo_banco = mask('cedente_banco', _type=str)
+        self.conta_cedente = mask('cedente_conta', _type=str)
+        self.data_documento = mask('data_documento', _type=str)
         self.data_processamento = mask('data_processamento',
                                        datetime.date.today())
         self.data_vencimento = mask('data_vencimento')
@@ -160,14 +164,14 @@ class BoletoData(object):
         self.moeda = mask('moeda', "9")
         self.numero_documento = mask('numero_do_documento')
         self.quantidade = mask('quantidade')
-        self.sacado_nome = mask('sacado_nome')
-        self.sacado_documento = mask('sacado_documento')
-        self.sacado_cidade = mask('sacado_cidade')
-        self.sacado_uf = mask('sacado_uf')
-        self.sacado_endereco = mask('sacado_logradouro')
-        self.sacado_bairro = mask('sacado_bairro')
-        self.sacado_cep = mask('sacado_cep')
-        self._valor_documento = Decimal(mask('valor_documento', '0.00'))
+        self.sacado_nome = mask('sacado_nome', _type=unicode)
+        self.sacado_documento = mask('sacado_documento', _type=str)
+        self.sacado_cidade = mask('sacado_cidade', _type=unicode)
+        self.sacado_uf = mask('sacado_uf', _type=unicode)
+        self.sacado_endereco = mask('sacado_logradouro', _type=unicode)
+        self.sacado_bairro = mask('sacado_bairro', _type=unicode)
+        self.sacado_cep = mask('sacado_cep', _type=str)
+        self._valor_documento = mask('valor_documento', '0.00', _type=Decimal)
         self._instrucoes = mask('instrucoes', [])
         if kwargs:
             raise TypeError("Paramêtro(s) desconhecido: %r" % (kwargs, ))
