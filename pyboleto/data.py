@@ -139,7 +139,7 @@ class BoletoData(object):
         self.aceite = mask('aceite', "N")
         self.agencia_cedente = mask('cedente_agencia')
         self.carteira = mask('cedente_carteira')
-        self.cedente = mask('cedente')
+        self.cedente = mask('cedente_nome')
         self.cedente_cidade = mask('cedente_cidade')
         self.cedente_uf = mask('cedente_uf')
         self.cedente_logradouro = mask('cedente_logradouro')
