@@ -11,6 +11,7 @@
 
 """
 import datetime
+import six
 from decimal import Decimal
 
 
@@ -141,17 +142,17 @@ class BoletoData(object):
         #        otherwise the printed value might diffent from the value in
         #        the barcode.
         self.aceite = mask('aceite', "N")
-        self.agencia_cedente = mask('cedente_agencia', _type=str)
-        self.carteira = mask('cedente_carteira', _type=str)
-        self.cedente = mask('cedente_nome', _type=unicode)
-        self.cedente_cidade = mask('cedente_cidade', _type=unicode)
-        self.cedente_uf = mask('cedente_uf', _type=unicode)
-        self.cedente_logradouro = mask('cedente_logradouro', _type=unicode)
-        self.cedente_bairro = mask('cedente_bairro', _type=unicode)
-        self.cedente_cep = mask('cedente_cep', _type=str)
-        self.cedente_documento = mask('cedente_documento', _type=str)
-        self.codigo_banco = mask('cedente_banco', _type=str)
-        self.conta_cedente = mask('cedente_conta', _type=str)
+        self.agencia_cedente = mask('cedente_agencia', _type=six.text_type)
+        self.carteira = mask('cedente_carteira', _type=six.text_type)
+        self.cedente = mask('cedente_nome', _type=six.text_type)
+        self.cedente_cidade = mask('cedente_cidade', _type=six.text_type)
+        self.cedente_uf = mask('cedente_uf', _type=six.text_type)
+        self.cedente_logradouro = mask('cedente_logradouro', _type=six.text_type)
+        self.cedente_bairro = mask('cedente_bairro', _type=six.text_type)
+        self.cedente_cep = mask('cedente_cep', _type=six.text_type)
+        self.cedente_documento = mask('cedente_documento', _type=six.text_type)
+        self.codigo_banco = mask('cedente_banco', _type=six.text_type)
+        self.conta_cedente = mask('cedente_conta', _type=six.text_type)
         self.data_documento = mask('data_documento')
         self.data_processamento = mask('data_processamento',
                                        datetime.date.today())
@@ -164,13 +165,13 @@ class BoletoData(object):
         self.moeda = mask('moeda', "9")
         self.numero_documento = mask('numero_do_documento')
         self.quantidade = mask('quantidade')
-        self.sacado_nome = mask('sacado_nome', _type=unicode)
-        self.sacado_documento = mask('sacado_documento', _type=str)
-        self.sacado_cidade = mask('sacado_cidade', _type=unicode)
-        self.sacado_uf = mask('sacado_uf', _type=unicode)
-        self.sacado_endereco = mask('sacado_logradouro', _type=unicode)
-        self.sacado_bairro = mask('sacado_bairro', _type=unicode)
-        self.sacado_cep = mask('sacado_cep', _type=str)
+        self.sacado_nome = mask('sacado_nome', _type=six.text_type)
+        self.sacado_documento = mask('sacado_documento', _type=six.text_type)
+        self.sacado_cidade = mask('sacado_cidade', _type=six.text_type)
+        self.sacado_uf = mask('sacado_uf', _type=six.text_type)
+        self.sacado_endereco = mask('sacado_logradouro', _type=six.text_type)
+        self.sacado_bairro = mask('sacado_bairro', _type=six.text_type)
+        self.sacado_cep = mask('sacado_cep', _type=six.text_type)
         self._valor_documento = mask('valor_documento', '0.00', _type=Decimal)
         self._instrucoes = mask('instrucoes', [])
         if kwargs:
@@ -345,7 +346,7 @@ class BoletoData(object):
         return self._instrucoes
 
     def _instrucoes_set(self, list_inst):
-        if isinstance(list_inst, basestring):
+        if isinstance(list_inst, six.string_types):
             list_inst = list_inst.splitlines()
 
         if len(list_inst) > 7:
@@ -369,7 +370,7 @@ class BoletoData(object):
         return self._demonstrativo
 
     def _demonstrativo_set(self, list_dem):
-        if isinstance(list_dem, basestring):
+        if isinstance(list_dem, six.string_types):
             list_dem = list_dem.splitlines()
 
         if len(list_dem) > 12:
@@ -454,7 +455,7 @@ class BoletoData(object):
 
     @staticmethod
     def modulo10(num):
-        if not isinstance(num, basestring):
+        if not isinstance(num, six.string_types):
             raise TypeError
         soma = 0
         peso = 2
@@ -479,7 +480,7 @@ class BoletoData(object):
 
     @staticmethod
     def modulo11(num, base=9, r=0):
-        if not isinstance(num, basestring):
+        if not isinstance(num, six.string_types):
             raise TypeError
         soma = 0
         fator = 2

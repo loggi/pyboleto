@@ -10,6 +10,7 @@
 
 """
 import os
+import six
 
 from reportlab.graphics.barcode.common import I2of5
 from reportlab.lib.colors import black
@@ -352,7 +353,7 @@ class BoletoPDF(object):
         )
 
         # Take care of long field
-        sacado0 = unicode(boletoDados.sacado[0])
+        sacado0 = six.text_type(boletoDados.sacado[0])
         while(stringWidth(sacado0,
               self.pdfCanvas._fontname,
               self.pdfCanvas._fontsize) > 8.4 * cm):
