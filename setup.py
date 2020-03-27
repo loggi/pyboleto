@@ -32,7 +32,7 @@ else:
     ]
 
 setup(
-    name='pyboleto',
+    name='loggipyboleto',
     version=__version__,
     author='Loggi Tecnologia LTDA',
     author_email='dev@loggi.com',
@@ -44,10 +44,11 @@ setup(
     },
     zip_safe=False,
     provides=[
-        'pyboleto'
+        'loggipyboleto'
     ],
     license='BSD',
-    description='Python Library to create "boletos de cobrança bancária" for several Brazilian banks',
+    description=
+    'Python Library to create "boletos de cobrança bancária" for several Brazilian banks',
     long_description=read('README.rst'),
     download_url='http://pypi.python.org/pypi/pyboleto',
     scripts=['bin/pyboleto_sample.py'],
