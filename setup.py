@@ -32,7 +32,7 @@ else:
     ]
 
 setup(
-    name='loggipyboleto',
+    name='pyboleto',
     version=__version__,
     author='Loggi Tecnologia LTDA',
     author_email='dev@loggi.com',
@@ -44,7 +44,7 @@ setup(
     },
     zip_safe=False,
     provides=[
-        'loggipyboleto'
+        'pyboleto'
     ],
     license='BSD',
     description=
