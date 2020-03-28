@@ -14,9 +14,6 @@ if sys.version_info >= (3,):
     extra['use_2to3'] = True
     #extra['convert_2to3_doctests'] = ['src/your/module/README.txt']
     #extra['use_2to3_fixers'] = ['your.fixers']
-    extra['install_requires'] = [
-        'distribute',
-    ]
     extra['tests_require'] = [
         'pep8>=0.6.1',
         'pep8<1.3',
