@@ -32,3 +32,4 @@ venv
 
 .ropeproject/
 .idea
+.python-version

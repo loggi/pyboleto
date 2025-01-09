@@ -23,6 +23,8 @@ class BoletoException(Exception):
 
 _EPOCH = datetime.date(1997, 10, 7)
 
+PAYMENT_FACTOR_MAX_LIMIT = 9999
+
 
 class custom_property(object):
     """Função para criar propriedades nos boletos
@@ -214,10 +216,12 @@ class BoletoData(object):
                     self.__class__.__name__, attr, length, value, len(value)))
 
         due_date_days = (self.data_vencimento - _EPOCH).days
-        if not 9999 >= due_date_days >= 0:
+        if self._as_reached_payment_factor_max_limit(due_date_days):
+            due_date_days = self._calculate_due_date_days_from_factor(due_date_days, 1000)
+        if not PAYMENT_FACTOR_MAX_LIMIT >= due_date_days >= 0:
             raise TypeError(
                 "Invalid date, must be between 1997/07/01 and "
-                "2024/11/15")
+                "2048/10/13")
         num = "%s%1s%04d%010d%24s" % (self.codigo_banco,
                                       self.moeda,
                                       due_date_days,
@@ -230,6 +234,19 @@ class BoletoData(object):
             raise BoletoException(
                 'The barcode must have 44 characteres, found %d' % len(barcode))
         return barcode
+    
+    def _as_reached_payment_factor_max_limit(
+        self,
+        due_date_days
+    ):
+        return due_date_days > PAYMENT_FACTOR_MAX_LIMIT
+    
+    def _calculate_due_date_days_from_factor(
+        self,
+        due_date_days,
+        factor,
+    ):
+        return due_date_days - PAYMENT_FACTOR_MAX_LIMIT + factor - 1
 
     @property
     def dv_nosso_numero(self):
