@@ -234,13 +234,13 @@ class BoletoData(object):
             raise BoletoException(
                 'The barcode must have 44 characteres, found %d' % len(barcode))
         return barcode
-    
+
     def _as_reached_payment_factor_max_limit(
         self,
         due_date_days
     ):
         return due_date_days > PAYMENT_FACTOR_MAX_LIMIT
-    
+
     def _calculate_due_date_days_from_factor(
         self,
         due_date_days,
